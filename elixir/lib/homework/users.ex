@@ -38,6 +38,16 @@ defmodule Homework.Users do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
+  Searches for a User by its name.
+  """
+  def searchForUser(firstName) do
+    like = "%#{firstName}%"
+    search = from obj in User,
+              where: like(obj.first_name, ^like)
+    Repo.all(search)
+  end
+
+  @doc """
   Creates a user.
 
   ## Examples

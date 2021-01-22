@@ -1,6 +1,7 @@
 defmodule HomeworkWeb.Resolvers.CompaniesResolver do
   alias Homework.Companies
 
+
   @doc """
   Get a list of companies
   """
@@ -9,9 +10,22 @@ defmodule HomeworkWeb.Resolvers.CompaniesResolver do
   end
 
   @doc """
+    Converts amount from decimal to Integer
+  """
+  def decimalToInteger(decimal) do
+    amount = trunc(Decimal.to_float(decimal) * 100)
+  end
+
+
+  @doc """
   Create a new company
   """
   def create_company(_root, args, _info) do
+    availableCredit = decimalToInteger(args.credit_line)
+
+    args = %{args | credit_line: availableCredit}
+    args = Map.put(args, :availableCredit, availableCredit)
+
     case Companies.create_company(args) do
       {:ok, company} ->
         {:ok, company}
@@ -20,6 +34,7 @@ defmodule HomeworkWeb.Resolvers.CompaniesResolver do
         {:error, "could not create company: #{inspect(error)}"}
     end
   end
+
 
   @doc """
   Updates a company for an id with args specified.
@@ -45,7 +60,7 @@ defmodule HomeworkWeb.Resolvers.CompaniesResolver do
     case Companies.delete_company(company) do
       {:ok, company} ->
         {:ok, company}
-        
+
 
       error ->
         {:error, "could not update company: #{inspect(error)}"}

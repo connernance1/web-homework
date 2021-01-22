@@ -16,6 +16,14 @@ defmodule HomeworkWeb.Schemas.UsersSchema do
     field(:updated_at, :naive_datetime)
   end
 
+  object :searchUser do
+    @desc "Search User by Name"
+    field :searchForUser, non_null(list_of(non_null(:user))) do
+      arg(:name, non_null(:string))
+      resolve(&UsersResolver.searchForUser/3)
+    end
+  end
+
   object :user_mutations do
     @desc "Create a new user"
     field :create_user, :user do

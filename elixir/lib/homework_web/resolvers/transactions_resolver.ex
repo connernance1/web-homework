@@ -2,7 +2,7 @@ defmodule HomeworkWeb.Resolvers.TransactionsResolver do
   alias Homework.Merchants
   alias Homework.Transactions
   alias Homework.Users
- 
+
 
   @doc """
   Get a list of transcations
@@ -32,10 +32,21 @@ defmodule HomeworkWeb.Resolvers.TransactionsResolver do
   #  {:ok, Companies.get_company!(company_id)}
   # end
 
+
+  @doc """
+    Converts amount from decimal to Integer
+  """
+  def decimalToInteger(decimal) do
+    amount = trunc(Decimal.to_float(decimal) * 100)
+  end
+
   @doc """
   Create a new transaction
   """
   def create_transaction(_root, args, _info) do
+    amount = decimalToInteger(args.amount)
+    args = %{args | amount: amount}
+
     case Transactions.create_transaction(args) do
       {:ok, transaction} ->
         {:ok, transaction}
@@ -44,6 +55,7 @@ defmodule HomeworkWeb.Resolvers.TransactionsResolver do
         {:error, "could not create transaction: #{inspect(error)}"}
     end
   end
+
 
   @doc """
   Updates a transaction for an id with args specified.
