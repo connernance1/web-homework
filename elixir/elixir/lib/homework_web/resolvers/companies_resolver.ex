@@ -21,10 +21,10 @@ defmodule HomeworkWeb.Resolvers.CompaniesResolver do
   Create a new company
   """
   def create_company(_root, args, _info) do
-    availableCredit = decimalToInteger(args.credit_line)
+    available_credit = decimalToInteger(args.credit_line)
 
-    args = %{args | credit_line: availableCredit}
-    args = Map.put(args, :availableCredit, availableCredit)
+    args = %{args | credit_line: available_credit}
+    args = Map.put(args, :availableCredit, available_credit)
 
     case Companies.create_company(args) do
       {:ok, company} ->

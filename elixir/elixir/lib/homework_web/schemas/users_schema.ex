@@ -16,11 +16,11 @@ defmodule HomeworkWeb.Schemas.UsersSchema do
     field(:updated_at, :naive_datetime)
   end
 
-  object :searchUser do
+  object :search_user do
     @desc "Search User by Name"
-    field :searchForUser, non_null(list_of(non_null(:user))) do
+    field :search_for_user, non_null(list_of(non_null(:user))) do
       arg(:name, non_null(:string))
-      resolve(&UsersResolver.searchForUser/3)
+      resolve(&UsersResolver.search_for_user/3)
     end
   end
 

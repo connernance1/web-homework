@@ -19,8 +19,8 @@ defmodule HomeworkWeb.Resolvers.UsersResolver do
   @doc """
     Searches for User by name
   """
-  def searchForUser(_root, %{name: name} = args, _info) do
-    {:ok, Users.searchForMerchant}
+  def search_for_user(_root, %{name: name} = args, _info) do
+    {:ok, Users.search_for_user}
   end
 
   @doc """

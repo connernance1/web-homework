@@ -22,9 +22,9 @@ defmodule HomeworkWeb.Schema do
     end
 
     @desc "Search User by name"
-    field :searchForUser, non_null(list_of(non_null(:user))) do
+    field :search_for_user, non_null(list_of(non_null(:user))) do
       arg(:name, non_null(:string))
-      resolve(&UsersResolver.searchForUser/3)
+      resolve(&UsersResolver.search_for_user/3)
     end
 
     @desc "Get all Merchants"

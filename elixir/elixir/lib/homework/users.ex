@@ -40,8 +40,8 @@ defmodule Homework.Users do
   @doc """
   Searches for a User by its name.
   """
-  def searchForUser(firstName) do
-    like = "%#{firstName}%"
+  def search_for_user(first_name) do
+    like = "%#{first_name}%"
     search = from obj in User,
               where: like(obj.first_name, ^like)
     Repo.all(search)
